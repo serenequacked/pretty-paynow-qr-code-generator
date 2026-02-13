@@ -5,3 +5,8 @@
 body {
   font-size: 16px;
 }
+
+.caption {
+  font-weight: bold;
+  font-size: 3rem; /* adjust as needed */
+}

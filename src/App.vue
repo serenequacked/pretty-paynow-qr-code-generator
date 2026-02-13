@@ -36,6 +36,7 @@
         id="phone"
         :value="target"
         @input="event => target = (event.target as any).value"
+        maxlength="20"
       />
       <input
         type="text"
@@ -43,26 +44,39 @@
         id="phone"
         :value="target"
         @input="event => target = (event.target as any).value"
+        maxlength="20"
       />
     </div>
 
     <div class="field no-print">
       <label for="reference">
-        <h4>Transaction Reference</h4>
+        <h4>Transaction Reference (Max length: 99 Characters)</h4>
       </label>
       <input
         type="text"
         id="reference"
         :value="reference"
         @input="event => reference = (event.target as any).value"
+        maxlength="99"
       />
     </div>
+    <!-- TODO: Show Length of Transaction Reference -->
+
     <img src="./assets/paynow-logo-2-01.png" ref="logoRef" class="logo" />
 
     <img :src="qrcodeDataURL" class="generated-QR" />
 
     <canvas ref="canvasRef" :width="imageWidth" :height="imageWidth" style="display: none"></canvas>
-    <div class="caption">{{ qrcodeDataTarget.replace(/^\+65/, "") }}</div>
+    <div>
+      <div class="caption">
+        {{ qrcodeDataTarget.replace(/^\+65/, "") }}
+      </div>
+    </div>
+
+    <div>
+
+    </div>
+
     <div style="text-align: center">
       <br />
       <button class="no-print" @click="print">Print</button>
@@ -174,6 +188,12 @@ class QRData {
     this.components = components;
   }
 
+  data() {
+    return {
+      backgroundPreset: 'default', // future-proofing
+    }
+  }
+
   toString(): string {
     return sortBy(Object.entries(this.components), ([k, v]: [string, any]) => k)
       .map(([key, comp]: [key: string, comp: QRDataComponentValue]) => {
@@ -242,7 +262,9 @@ const standardizePhone = (mode: string, s: string) => {
   }
 };
 
-const imageWidth = 2000;
+const imageWidth = 1500;
+const UEN_MAX_LENGTH = 20;
+const TRANSATION_REF_MAX_LENGTH = 99;
 
 watch(
   [mode, target, reference, canvasRef, imageWidth],
