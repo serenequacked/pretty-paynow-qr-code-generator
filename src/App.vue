@@ -75,22 +75,25 @@
       />
     </div>
 
-    <div>
-      <div class="caption">
-        {{ qrCodeName }}
+    <div class="paynow-card">
+      <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
+
+      <div class="overlay">
+        <div class="caption">
+          {{ qrCodeReceipientName }}
+        </div>
+
+        <img src="./assets/paynow-logo-2-01.png" ref="logoRef" class="logo" />
+
+        <img :src="qrcodeDataURL" class="generated-QR" />
+
+        <canvas ref="canvasRef" :width="imageWidth" :height="imageWidth" style="display: none"></canvas>
       </div>
-    </div>
 
-    <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
-
-    <img src="./assets/paynow-logo-2-01.png" ref="logoRef" class="logo" />
-
-    <img :src="qrcodeDataURL" class="generated-QR" />
-
-    <canvas ref="canvasRef" :width="imageWidth" :height="imageWidth" style="display: none"></canvas>
-    <div>
-      <div class="caption">
-        {{ qrcodeDataTarget.replace(/^\+65/, "") }}
+      <div>
+        <div class="caption">
+          {{ qrcodeDataTarget.replace(/^\+65/, "") }}
+        </div>
       </div>
     </div>
 
@@ -168,15 +171,30 @@ input[type="tel"] {
   display: none;
 }
 
+.paynow-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+}
+
 .background {
   width: 100%;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0; /* top:0 right:0 bottom:0 left:0 */
+  pointer-events: none; /* prevents blocking clicks if needed */
 }
 
 .generated-QR {
-  width: 80%;
-  height: auto;
-  margin: auto;
-  display: block;
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
 }
 
 .caption {
@@ -275,7 +293,7 @@ const updateLocalStorage = (key: string, value: string) => {
 
 const qrcodeDataURL = ref(getLocalStorage("phone"));
 const qrcodeDataTarget = ref("");
-const qrCodeName = ref(receipientName);
+const qrCodeReceipientName = ref(receipientName);
 
 const standardizePhone = (mode: string, s: string) => {
   if (mode !== "phone") {
