@@ -99,10 +99,12 @@
 
     </div>
 
-    <div style="text-align: center">
-      <br />
-      <button class="no-print" @click="print">Print</button>
-    </div>
+  <button class="no-print" @click="downloadPNG">
+    Download PNG (Recommended)
+  </button>
+  <button class="no-print" @click="print">
+    Print (PDF)
+  </button>
   </main>
 
   <footer class="no-print">
@@ -130,6 +132,11 @@
 @media print {
   .no-print {
     display: none;
+    margin: 0;
+  }
+
+  .paynow-card {
+    margin: 0 auto;
   }
 }
 
@@ -173,10 +180,9 @@ input[type="tel"] {
   position: relative;
   width: 100%;
   max-width: 520px;
-  margin: 2rem auto;
 
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
+  border-radius: 0px;
   overflow: hidden;
 }
 
@@ -240,6 +246,22 @@ import { ref, watch } from "vue";
 import { sortBy, throttle } from "lodash";
 import * as qrcode from "qrcode";
 import crc16ccitt from "crc/calculators/crc16ccitt";
+import { toPng } from "html-to-image";
+
+const downloadPNG = async () => {
+  const node = document.querySelector(".paynow-card") as HTMLElement;
+  if (!node) return;
+
+  const dataUrl = await toPng(node, {
+    pixelRatio: 2, // sharper print
+    backgroundColor: "#ffffff",
+  });
+
+  const link = document.createElement("a");
+  link.download = "paynow-card.png";
+  link.href = dataUrl;
+  link.click();
+};
 
 const mode = ref("phone");
 const target = ref("");
