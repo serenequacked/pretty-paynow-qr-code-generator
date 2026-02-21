@@ -88,10 +88,8 @@
         <img :src="qrcodeDataURL" class="generated-QR" />
 
         <canvas ref="canvasRef" :width="imageWidth" :height="imageWidth" style="display: none"></canvas>
-      </div>
-
-      <div>
-        <div class="caption">
+      
+        <div class="paynow-identifier">
           {{ qrcodeDataTarget.replace(/^\+65/, "") }}
         </div>
       </div>
@@ -205,6 +203,19 @@ input[type="tel"] {
   left: 50%;
   transform: translateX(-50%);
   width: 60%;
+}
+
+.paynow-identifier {
+  position: absolute;
+  bottom: 3%;
+  right: 5%;
+
+  font-size: 0.7em;      /* small print */
+  font-weight: 500;
+  letter-spacing: 0.4px;
+
+  color: #444;
+  opacity: 0.8;
 }
 
 .caption {
