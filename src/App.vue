@@ -79,7 +79,7 @@
       <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
 
       <div class="overlay">
-        <div class="caption">
+        <div class="recipient-name">
           {{ qrCodeReceipientName }}
         </div>
 
@@ -176,6 +176,16 @@ input[type="tel"] {
   width: 100%;
   max-width: 520px;
   margin: auto;
+}
+
+.recipient-name {
+  position: absolute;
+  top: 16%;              /* sits above QR */
+  width: 100%;
+  text-align: center;
+  font-size: 2em;     /* smaller, cleaner */
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .background {
