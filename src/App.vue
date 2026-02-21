@@ -396,7 +396,14 @@ watch(
         await qrcode.toCanvas(canvasRef.value, data, {
           errorCorrectionLevel: "M",
           width: imageWidth,
-          color: { dark: "#941c80" },
+
+          margin: 1,              // 🔑 reduces white border (default is 4)
+          scale: 4,               // keeps modules crisp
+
+          color: {
+            dark: "#941c80",
+            light: "#ffffff",
+          },
         });
         const context = canvasRef.value?.getContext("2d");
 
