@@ -71,7 +71,7 @@
         id="receipientName"
         :value="receipientName"
         @input="event => receipientName = (event.target as any).value"
-        maxlength="99"
+        maxlength="24"
       />
     </div>
 
@@ -173,7 +173,11 @@ input[type="tel"] {
   position: relative;
   width: 100%;
   max-width: 520px;
-  margin: auto;
+  margin: 2rem auto;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .recipient-name {
