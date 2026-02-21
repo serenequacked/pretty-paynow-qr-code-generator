@@ -4,65 +4,66 @@
   </header>
 
   <main>
-    <div class="no-print">
-      This page generates a QR for your phone number, or for your UEN. Print it out and
-      paste it wherever you run a hawker stall, pasar malam stall, or a garage sale!
-    </div>
-
-    <div class="field no-print">
-      <h4>PayNow destination type</h4>
-      <div>
-        <label>
-          <input type="radio" :checked="mode === 'phone'" @click="mode = 'phone'" />
-          Phone number
-        </label>
+    <div class="page">
+      <div class="input-fields">
+      <div class="no-print">
+        This page generates a QR for your phone number, or for your UEN. Print it out and
+        paste it wherever you run a hawker stall, pasar malam stall, or a garage sale!
       </div>
 
-      <div>
-        <label>
-          <input type="radio" :checked="mode === 'uen'" @click="mode = 'uen'" />
-          UEN
-        </label>
+      <div class="field no-print">
+        <h4>PayNow destination type</h4>
+        <div>
+          <label>
+            <input type="radio" :checked="mode === 'phone'" @click="mode = 'phone'" />
+            Phone number
+          </label>
+        </div>
+
+        <div>
+          <label>
+            <input type="radio" :checked="mode === 'uen'" @click="mode = 'uen'" />
+            UEN
+          </label>
+        </div>
       </div>
-    </div>
 
-    <div class="field no-print">
-      <label for="phone">
-        <h4>{{ mode === "phone" ? "Phone" : "UEN" }}</h4>
-      </label>
-      <input
-        type="tel"
-        v-if="mode === 'phone'"
-        id="phone"
-        :value="target"
-        @input="event => target = (event.target as any).value"
-        maxlength="20"
-      />
-      <input
-        type="text"
-        v-else
-        id="phone"
-        :value="target"
-        @input="event => target = (event.target as any).value"
-        maxlength="20"
-      />
-    </div>
+      <div class="field no-print">
+        <label for="phone">
+          <h4>{{ mode === "phone" ? "Phone" : "UEN" }}</h4>
+        </label>
+        <input
+          type="tel"
+          v-if="mode === 'phone'"
+          id="phone"
+          :value="target"
+          @input="event => target = (event.target as any).value"
+          maxlength="20"
+        />
+        <input
+          type="text"
+          v-else
+          id="phone"
+          :value="target"
+          @input="event => target = (event.target as any).value"
+          maxlength="20"
+        />
+      </div>
 
-    <div class="field no-print">
-      <label for="reference">
-        <h4>Transaction Reference (Max length: 99 Characters)</h4>
-      </label>
-      <input
-        type="text"
-        id="reference"
-        :value="reference"
-        @input="event => reference = (event.target as any).value"
-        maxlength="99"
-      />
-    </div>
-    <!-- TODO: Show Length of Transaction Reference -->
+      <div class="field no-print">
+        <label for="reference">
+          <h4>Transaction Reference (Max length: 99 Characters)</h4>
+        </label>
+        <input
+          type="text"
+          id="reference"
+          :value="reference"
+          @input="event => reference = (event.target as any).value"
+          maxlength="99"
+        />
+      </div>
 
-    <div class="field no-print">
+      <div class="field no-print">
       <label for="receipientName">
         <h4>Receipient PayNow Name</h4>
       </label>
@@ -73,38 +74,37 @@
         @input="event => receipientName = (event.target as any).value"
         maxlength="24"
       />
-    </div>
+      </div>
+      </div>
+      <div class="paynow-card">
+        <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
 
-    <div class="paynow-card">
-      <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
+        <div class="overlay">
+          <div class="recipient-name">
+            {{ qrCodeReceipientName }}
+          </div>
 
-      <div class="overlay">
-        <div class="recipient-name">
-          {{ qrCodeReceipientName }}
-        </div>
+          <img src="./assets/paynow-logo-2-01.png" ref="logoRef" class="logo" />
 
-        <img src="./assets/paynow-logo-2-01.png" ref="logoRef" class="logo" />
+          <img :src="qrcodeDataURL" class="generated-QR" />
 
-        <img :src="qrcodeDataURL" class="generated-QR" />
-
-        <canvas ref="canvasRef" :width="imageWidth" :height="imageWidth" style="display: none"></canvas>
-      
-        <div class="paynow-identifier">
-          {{ qrcodeDataTarget.replace(/^\+65/, "") }}
+          <canvas ref="canvasRef" :width="imageWidth" :height="imageWidth" style="display: none"></canvas>
+            
+          <div class="paynow-identifier">
+            {{ qrcodeDataTarget.replace(/^\+65/, "") }}
+          </div>
         </div>
       </div>
+
+      <div class="export-options">
+        <button class="no-print" @click="downloadPNG">
+          Download PNG (Recommended)
+        </button>
+        <button class="no-print" @click="print">
+          Print (PDF)
+        </button>
+      </div>
     </div>
-
-    <div>
-
-    </div>
-
-  <button class="no-print" @click="downloadPNG">
-    Download PNG (Recommended)
-  </button>
-  <button class="no-print" @click="print">
-    Print (PDF)
-  </button>
   </main>
 
   <footer class="no-print">
@@ -172,15 +172,27 @@ input[type="tel"] {
   box-sizing: border-box;
 }
 
+.page {
+  padding: 2rem 1.5rem;
+}
+
 .logo {
   display: none;
+}
+
+.input-fields {
+  margin-bottom: 3rem;
+}
+
+.export-options {
+  margin-top: 2rem;
 }
 
 .paynow-card {
   position: relative;
   width: 100%;
   max-width: 520px;
-
+  margin-bottom: 2.5rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0px;
   overflow: hidden;
