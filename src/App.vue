@@ -6,79 +6,102 @@
   <main>
     <div>
       <div class="input-fields">
-      <div class="no-print">
-        This page generates a QR for your phone number, or for your UEN. Print it out and
-        paste it wherever you run a hawker stall, pasar malam stall, or a garage sale!
-      </div>
-
-      <div class="field no-print">
-        <h4>PayNow destination type</h4>
-        <div>
-          <label>
-            <input type="radio" :checked="mode === 'phone'" @click="mode = 'phone'" />
-            Phone number
-          </label>
+        <div class="no-print">
+          This page generates a QR for your phone number, or for your UEN. Print it out and
+          paste it wherever you run a hawker stall, pasar malam stall, or a garage sale!
         </div>
 
-        <div>
-          <label>
-            <input type="radio" :checked="mode === 'uen'" @click="mode = 'uen'" />
-            UEN
-          </label>
+        <div class="field no-print">
+          <h4>PayNow destination type</h4>
+          <div>
+            <label>
+              <input type="radio" :checked="mode === 'phone'" @click="mode = 'phone'" />
+              Phone number
+            </label>
+          </div>
+
+          <div>
+            <label>
+              <input type="radio" :checked="mode === 'uen'" @click="mode = 'uen'" />
+              UEN
+            </label>
+          </div>
         </div>
-      </div>
 
-      <div class="field no-print">
-        <label for="phone">
-          <h4>{{ mode === "phone" ? "Phone" : "UEN" }}</h4>
+        <div class="field no-print">
+          <label for="phone">
+            <h4>{{ mode === "phone" ? "Phone" : "UEN" }}</h4>
+          </label>
+          <input
+            type="tel"
+            v-if="mode === 'phone'"
+            id="phone"
+            :value="target"
+            @input="event => target = (event.target as any).value"
+            maxlength="20"
+          />
+          <input
+            type="text"
+            v-else
+            id="phone"
+            :value="target"
+            @input="event => target = (event.target as any).value"
+            maxlength="20"
+          />
+        </div>
+
+        <div class="field no-print">
+          <label for="reference">
+            <h4>Transaction Reference (Max length: 99 Characters)</h4>
+          </label>
+          <input
+            type="text"
+            id="reference"
+            :value="reference"
+            @input="event => reference = (event.target as any).value"
+            maxlength="99"
+          />
+        </div>
+
+        <div class="field no-print">
+        <label for="receipientName">
+          <h4>Receipient PayNow Name</h4>
         </label>
         <input
-          type="tel"
-          v-if="mode === 'phone'"
-          id="phone"
-          :value="target"
-          @input="event => target = (event.target as any).value"
-          maxlength="20"
-        />
-        <input
           type="text"
-          v-else
-          id="phone"
-          :value="target"
-          @input="event => target = (event.target as any).value"
-          maxlength="20"
+          id="receipientName"
+          :value="receipientName"
+          @input="event => receipientName = (event.target as any).value"
+          maxlength="24"
         />
-      </div>
+        </div>
 
-      <div class="field no-print">
-        <label for="reference">
-          <h4>Transaction Reference (Max length: 99 Characters)</h4>
-        </label>
-        <input
-          type="text"
-          id="reference"
-          :value="reference"
-          @input="event => reference = (event.target as any).value"
-          maxlength="99"
-        />
-      </div>
+        <div class="field no-print">
+          <h4>Background style</h4>
 
-      <div class="field no-print">
-      <label for="receipientName">
-        <h4>Receipient PayNow Name</h4>
-      </label>
-      <input
-        type="text"
-        id="receipientName"
-        :value="receipientName"
-        @input="event => receipientName = (event.target as any).value"
-        maxlength="24"
-      />
-      </div>
+          <select v-model="selectedBackgroundId">
+            <option
+              v-for="bg in BACKGROUNDS"
+              :key="bg.id"
+              :value="bg.id"
+            >
+              {{ bg.label }}
+            </option>
+          </select>
+        </div>
+
       </div>
       <div class="paynow-card">
-        <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
+        <img
+          v-if="selectedBackground.src"
+          :src="selectedBackground.src"
+          class="background"
+        />
 
+        <div
+          v-else
+          class="background background--none"
+        ></div>
         <div class="overlay">
           <div class="recipient-name">
             {{ qrCodeReceipientName }}
@@ -209,6 +232,12 @@ input[type="tel"] {
   display: block;
 }
 
+.background--none {
+  width: 100%;
+  aspect-ratio: 520 / 330;
+  background: #ffffff;
+}
+
 .overlay {
   position: absolute;
   inset: 0; /* top:0 right:0 bottom:0 left:0 */
@@ -250,11 +279,18 @@ button {
 </style>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { sortBy, throttle } from "lodash";
 import * as qrcode from "qrcode";
 import crc16ccitt from "crc/calculators/crc16ccitt";
 import { toPng } from "html-to-image";
+import { BACKGROUNDS } from "../src/background";
+
+const selectedBackgroundId = ref("basic");
+
+const selectedBackground = computed(() =>
+  BACKGROUNDS.find(b => b.id === selectedBackgroundId.value)!
+);
 
 const downloadPNG = async () => {
   const node = document.querySelector(".paynow-card") as HTMLElement;
