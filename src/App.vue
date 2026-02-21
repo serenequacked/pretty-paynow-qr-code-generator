@@ -4,7 +4,7 @@
   </header>
 
   <main>
-    <div class="page">
+    <div>
       <div class="input-fields">
       <div class="no-print">
         This page generates a QR for your phone number, or for your UEN. Print it out and
@@ -170,10 +170,6 @@ input[type="tel"] {
   line-height: 1.5;
   width: 100%;
   box-sizing: border-box;
-}
-
-.page {
-  padding: 2rem 1.5rem;
 }
 
 .logo {
