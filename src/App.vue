@@ -62,6 +62,27 @@
     </div>
     <!-- TODO: Show Length of Transaction Reference -->
 
+    <div class="field no-print">
+      <label for="receipientName">
+        <h4>Receipient PayNow Name</h4>
+      </label>
+      <input
+        type="text"
+        id="receipientName"
+        :value="receipientName"
+        @input="event => receipientName = (event.target as any).value"
+        maxlength="99"
+      />
+    </div>
+
+    <div>
+      <div class="caption">
+        {{ qrCodeName }}
+      </div>
+    </div>
+
+    <img src="./assets/basic_paynow_background.png" ref="logoRef" class="background" />
+
     <img src="./assets/paynow-logo-2-01.png" ref="logoRef" class="logo" />
 
     <img :src="qrcodeDataURL" class="generated-QR" />
@@ -147,8 +168,12 @@ input[type="tel"] {
   display: none;
 }
 
-.generated-QR {
+.background {
   width: 100%;
+}
+
+.generated-QR {
+  width: 80%;
   height: auto;
   margin: auto;
   display: block;
@@ -176,6 +201,7 @@ import crc16ccitt from "crc/calculators/crc16ccitt";
 const mode = ref("phone");
 const target = ref("");
 const reference = ref("");
+const receipientName = ref("");
 const canvasRef = ref(null as null | HTMLCanvasElement);
 const logoRef = ref(null as null | HTMLImageElement);
 
@@ -249,6 +275,7 @@ const updateLocalStorage = (key: string, value: string) => {
 
 const qrcodeDataURL = ref(getLocalStorage("phone"));
 const qrcodeDataTarget = ref("");
+const qrCodeName = ref(receipientName);
 
 const standardizePhone = (mode: string, s: string) => {
   if (mode !== "phone") {
