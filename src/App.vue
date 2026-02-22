@@ -452,7 +452,7 @@ watch(
         const context = canvasRef.value?.getContext("2d");
 
         const logoElem = logoRef.value;
-      debugger;
+
       if (logoElem) {
           const width = 1323;
           const height = 894;

@@ -14,6 +14,7 @@
   "dependencies": {
     "@types/lodash": "^4.17.0",
     "crc": "^4.3.2",
+    "html-to-image": "^1.11.13",
     "lodash": "^4.17.21",
     "qrcode": "^1.5.3",
     "vue": "^3.4.21"
