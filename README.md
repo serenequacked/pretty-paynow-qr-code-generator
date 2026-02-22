@@ -1,6 +1,19 @@
 # pretty-paynow-qr-code-generator
 
-Generates a pretty QR codes for use. 
+Create beautiful, customizable PayNow QR codes with print-ready templates for stalls, gifts, events, and everyday payments.
+
+This generator focuses on design, usability, and personalization, turning functional QR codes into fun, friendly, and visually appealing payment tools.
+
+## Features
+✅ Custom Background Templates – Choose from multiple pre-designed backgrounds for events or create your own.
+
+✅ Print-Ready Layouts – Optimized for physical stalls, gifts, and marketing materials.
+
+✅ Customizable Recipient Name & Reference – Personalize every QR code.
+
+✅ User-Friendly Interface – Simple, intuitive, and fast.
+
+✅ Lightweight & Extendable – Built with Vue.js and modern web technologies.
 
 ## Attribution
 
@@ -14,14 +27,14 @@ and visual design.
 
 ## Project Philosophy
 
-PayNow QR codes are often functional but visually dull.
-This project treats QR codes as **design objects**, not just payment tools.
+PayNow QR codes are widely used but often visually bland.
 
-The goal is to make it easy for anyone to generate QR codes that feel:
-- Friendly
-- Fun
-- On-brand
-- Suitable for gifts, stalls, and events
+This project treats QR codes as design objects, not just payment tools.
+With this generator, you can create QR codes that feel:
+
+- Friendly and fun
+- On-brand and professional
+- Perfect for gifts, events, and business stalls
 
 ## Upcoming Features 
 - Generative AI backgrounds 
