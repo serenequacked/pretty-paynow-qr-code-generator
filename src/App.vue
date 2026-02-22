@@ -199,7 +199,7 @@
     padding-left: 0;
     width: 100%;
     display: flex;
-    justify-content: center; /* keep QR centered */
+    justify-content: center; 
   }
 
   .paynow-card {
@@ -239,7 +239,6 @@ input[type="tel"] {
 .input-fields {
   flex: 1 1 300px;   /* grow/shrink, min width 300px */
   max-width: 400px;
-  padding-right: 100px;
 }
 
 .export-options {
@@ -255,7 +254,7 @@ input[type="tel"] {
 
 .page {
   display: flex;
-  gap: 2rem;         /* space between columns */
+  gap: 6rem;         /* space between columns */
   flex-wrap: wrap;    /* allows items to move to next line on small screens */
 }
 
