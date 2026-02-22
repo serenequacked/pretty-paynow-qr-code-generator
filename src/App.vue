@@ -4,7 +4,7 @@
   </header>
 
   <main>
-    <div>
+    <div class="page">
       <div class="input-fields">
         <div class="no-print">
           This page generates a QR for your phone number, or for your UEN. Print it out and
@@ -91,7 +91,9 @@
         </div>
 
       </div>
-      <div class="paynow-card">
+
+      <div class="preview">
+        <div class="paynow-card">
         <img
           v-if="selectedBackground.src"
           :src="selectedBackground.src"
@@ -118,16 +120,19 @@
           </div>
         </div>
       </div>
-
-      <div class="export-options">
-        <button class="no-print" @click="downloadPNG">
-          Download PNG (Recommended)
-        </button>
-        <button class="no-print" @click="print">
-          Print (PDF)
-        </button>
       </div>
     </div>
+
+        <div class="export-options">
+          <button class="no-print" @click="downloadPNG">
+            Download PNG (Recommended)
+          </button>
+          <button class="no-print" @click="print">
+            Print (PDF)
+          </button>
+        </div>
+
+
   </main>
 
   <footer class="no-print">
@@ -178,6 +183,30 @@
   }
 }
 
+/* Mobile: stack */
+@media (max-width: 768px) {
+  .page {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .input-fields {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .preview {
+    padding-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* keep QR centered */
+  }
+
+  .paynow-card {
+    max-width: 100%; /* allow it to expand fully */
+  }
+}
+
 h4 {
   margin-top: 1em;
   margin-bottom: 0;
@@ -199,18 +228,41 @@ input[type="tel"] {
   display: none;
 }
 
+.export-options {
+  display: flex;
+  justify-content: center; /* keep QR card centered */
+  position: relative;
+  gap: 10px;
+  flex-wrap: wrap; 
+}
+
 .input-fields {
-  margin-bottom: 3rem;
+  flex: 1 1 300px;   /* grow/shrink, min width 300px */
+  max-width: 400px;
+  padding-right: 100px;
 }
 
 .export-options {
   margin-top: 2rem;
 }
 
+/* Preview should stay at natural height */
+.preview {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: center; /* keep QR card centered */
+}
+
+.page {
+  display: flex;
+  gap: 2rem;         /* space between columns */
+  flex-wrap: wrap;    /* allows items to move to next line on small screens */
+}
+
 .paynow-card {
   position: relative;
   width: 100%;
-  max-width: 520px;
+  max-width: 520px; /* desktop max */
   margin-bottom: 2.5rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   border-radius: 0px;
@@ -245,11 +297,12 @@ input[type="tel"] {
 }
 
 .generated-QR {
+  width: 60%;
+  max-width: 100%; /* this ensures it never overflows */
   position: absolute;
   top: 23%;
   left: 50%;
   transform: translateX(-50%);
-  width: 60%;
 }
 
 .paynow-identifier {
@@ -275,6 +328,18 @@ footer ol li {
 
 button {
   padding: 1em;
+}
+
+main {
+  max-width: 900px; /* increase from 520px to a more desktop-friendly width */
+  margin: auto;      /* center horizontally */
+  padding: 1rem;     /* optional padding */
+}
+
+header, footer {
+  max-width: 900px;
+  margin: auto;
+  padding: 1rem;
 }
 </style>
 
