@@ -1,5 +1,5 @@
 {
-  "name": "paynow-qr-generator",
+  "name": "pretty-paynow-qr-code-generator",
   "version": "0.0.0",
   "private": true,
   "type": "module",
