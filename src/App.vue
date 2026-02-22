@@ -125,10 +125,10 @@
 
         <div class="export-options">
           <button class="no-print" @click="downloadPNG">
-            Download PNG (Recommended)
+            Download PNG
           </button>
           <button class="no-print" @click="print">
-            Print (PDF)
+            Print PDF
           </button>
         </div>
 
