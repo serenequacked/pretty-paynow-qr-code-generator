@@ -52,20 +52,20 @@
 
         <div class="field no-print">
           <label for="reference">
-            <h4>Transaction Reference (Max length: 99 Characters)</h4>
+            <h4>Transaction Reference (Optional) (Max length: 35 Characters)</h4>
           </label>
           <input
             type="text"
             id="reference"
             :value="reference"
             @input="event => reference = (event.target as any).value"
-            maxlength="99"
+            maxlength="35"
           />
         </div>
 
         <div class="field no-print">
         <label for="receipientName">
-          <h4>Receipient PayNow Name</h4>
+          <h4>Receipient Name (Optional)</h4>
         </label>
         <input
           type="text"
