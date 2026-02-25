@@ -1,16 +1,14 @@
 <template>
   <header class="no-print">
-    <h1>PayNow QR Code Generator</h1>
+    <h1>Pretty PayNow</h1>
+    <p class="subtitle">
+      Make your PayNow QR codes cute, clear, and print-ready.
+    </p>
   </header>
 
   <main>
     <div class="page">
       <div class="input-fields">
-        <div class="no-print">
-          This page generates a QR for your phone number, or for your UEN. Print it out and
-          paste it wherever you run a hawker stall, pasar malam stall, or a garage sale!
-        </div>
-
         <div class="field no-print">
           <h4>PayNow destination type</h4>
           <div>
@@ -77,7 +75,7 @@
         </div>
 
         <div class="field no-print">
-          <h4>Background style</h4>
+          <h4>Background Style</h4>
 
           <select v-model="selectedBackgroundId">
             <option
@@ -136,23 +134,9 @@
   </main>
 
   <footer class="no-print">
-    <h2>References</h2>
-    <ol>
-      <li>
-        <a
-          href="https://www.emvco.com/specifications/emv-qr-code-specification-for-payment-systems-emv-qrcps-merchant-presented-mode/"
-          >EMV® QR Code Specification for Payment Systems (EMV® QRCPS) Merchant-Presented
-          Mode</a
-        >
-      </li>
-      <li>
-        <a href="https://www.fullstacksys.com/paynow-qr-code-generator">
-          Fullstacksys.com Paynow QR Code Generator
-        </a>
-        - this website generates QR codes with suggested amounts, but not static codes.
-      </li>
-      <li>Singapore QR Codes for Payments ("SGQR") Specifications v1.7</li>
-    </ol>
+    <p>
+      Made with 💜 for hawkers, creators, and gift-givers.
+    </p>
   </footer>
 </template>
 
@@ -193,6 +177,7 @@
   .input-fields {
     border-right: none;
     padding-right: 0;
+    margin-inline: auto; /* 🔑 centers when on its own row */
   }
 
   .preview {
@@ -204,6 +189,17 @@
 
   .paynow-card {
     max-width: 100%; /* allow it to expand fully */
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: translateX(-50%) scale(0.96);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
   }
 }
 
@@ -228,6 +224,12 @@ input[type="tel"] {
   display: none;
 }
 
+.subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-top: -0.5rem;
+}
+
 .export-options {
   display: flex;
   justify-content: center; /* keep QR card centered */
@@ -239,6 +241,24 @@ input[type="tel"] {
 .input-fields {
   flex: 1 1 300px;   /* grow/shrink, min width 300px */
   max-width: 400px;
+}
+
+.paynow-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paynow-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.input-fields,
+.preview {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow:
+    0 10px 30px rgba(244, 114, 182, 0.18);
 }
 
 .export-options {
@@ -256,6 +276,7 @@ input[type="tel"] {
   display: flex;
   gap: 6rem;         /* space between columns */
   flex-wrap: wrap;    /* allows items to move to next line on small screens */
+  justify-content: center; /* 🔑 THIS */ 
 }
 
 .paynow-card {
@@ -302,6 +323,7 @@ input[type="tel"] {
   top: 23%;
   left: 50%;
   transform: translateX(-50%);
+  animation: popIn 0.2s ease;
 }
 
 .paynow-identifier {
