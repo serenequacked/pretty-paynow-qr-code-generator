@@ -4,8 +4,6 @@ Create beautiful, customizable PayNow QR codes with print-ready templates for st
 
 This generator focuses on design, usability, and personalization, turning functional QR codes into fun, friendly, and visually appealing payment tools.
 
-Try it here -> https://serenequacked.github.io/pretty-paynow-qr-code-generator/
-
 ## Features
 ✅ Custom Background Templates – Choose from multiple pre-designed backgrounds for events or create your own.
 

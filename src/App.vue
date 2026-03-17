@@ -89,13 +89,15 @@
         </div>
 
       </div>
-
+ 
       <div class="preview">
         <div class="paynow-card">
         <img
           v-if="selectedBackground.src"
           :src="selectedBackground.src"
           class="background"
+          loading="eager"
+          çdecoding="sync"
         />
 
         <div
@@ -378,17 +380,35 @@ const selectedBackground = computed(() =>
   BACKGROUNDS.find(b => b.id === selectedBackgroundId.value)!
 );
 
+const waitForImages = async (node: HTMLElement) => {
+  const images = Array.from(node.querySelectorAll("img"));
+
+  await Promise.all(
+    images.map(img => {
+      if (img.complete) return Promise.resolve();
+
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    })
+  );
+};
+
 const downloadPNG = async () => {
   const node = document.querySelector(".paynow-card") as HTMLElement;
   if (!node) return;
 
+  // 🔑 wait for background + QR images
+  await waitForImages(node);
+
   const dataUrl = await toPng(node, {
-    pixelRatio: 2, // sharper print
+    pixelRatio: 2,
     backgroundColor: "#ffffff",
   });
 
   const link = document.createElement("a");
-  link.download = "paynow-card.png";
+  link.download = "pretty-paynow.png";
   link.href = dataUrl;
   link.click();
 };
